@@ -180,7 +180,7 @@ namespace FileCli
             if (o.Format == "json")
             {
                 var payload = new CliResult(ok, action, path, message);
-                Console.Out.WriteLine(JsonSerializer.Serialize(payload, JsonOpts, CliJsonContext.Default.CliResult));
+                Console.Out.WriteLine(JsonSerializer.Serialize(payload, JsonOpts));
             }
             else
             {

@@ -38,7 +38,7 @@ jobs:
           dotnet-version: 9.0.x
       - name: AOT publish
         run: >
-          dotnet publish FileCli -c Release -r ${{ matrix.rid }}
+          dotnet publish FileCli.csproj -c Release -r ${{ matrix.rid }}
           -p:PublishAot=true -o publish
       - name: Pack archive (unix)
         if: runner.os != 'Windows'
@@ -63,7 +63,7 @@ jobs:
           merge-multiple: true
       - name: Pack dotnet tool
         run: |
-          dotnet pack FileCli -c Release -o nupkg
+          dotnet pack FileCli.csproj -c Release -o nupkg
       - uses: softprops/action-gh-release@v2
         with:
           files: |
