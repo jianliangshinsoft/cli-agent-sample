@@ -1,8 +1,8 @@
 # filecli 一键安装脚本（Windows PowerShell）
-# 用法: irm https://raw.githubusercontent.com/<owner>/<repo>/main/scripts/install.ps1 | iex
+# 用法: irm https://raw.githubusercontent.com/jianliangshinsoft/cli-agent-sample/main/scripts/install.ps1 | iex
 $ErrorActionPreference = "Stop"
 
-$Repo = "<owner>/<repo>"   # 发布后替换为实际 GitHub 仓库
+$Repo = "jianliangshinsoft/cli-agent-sample"   # 发布后替换为实际 GitHub 仓库
 $BinDir = "$env:LOCALAPPDATA\Programs\filecli"
 
 # 1. 识别架构 -> Release 资产名

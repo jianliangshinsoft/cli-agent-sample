@@ -11,7 +11,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/<owner>/<repo>.git"
+    "url": "git+https://github.com/jianliangshinsoft/cli-agent-sample.git"
   },
   "files": [
     "bin/",
