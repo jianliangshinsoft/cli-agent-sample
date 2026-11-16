@@ -1,6 +1,8 @@
 # 推送 v* 标签时触发：在三个操作系统的 runner 上做 Native AOT 编译，
 # 把各平台二进制 + dotnet tool 包发布到 GitHub Release。
 # 用法：git tag v1.0.1 && git push --tags
+# 注意：macos-15-intel 是最后的 x64 macOS 镜像，GitHub 将于 2027-08 前后移除 x64 macOS runner，
+# 届时需删除 osx-x64 矩阵腿（并同时移除 install.sh 中 x86_64 分支）。
 name: release
 
 on:
@@ -30,7 +32,7 @@ jobs:
           - os: macos-latest
             rid: osx-arm64
             asset: filecli-osx-arm64.tar.gz
-          - os: macos-13
+          - os: macos-15-intel
             rid: osx-x64
             asset: filecli-osx-x64.tar.gz
     runs-on: ${{ matrix.os }}
