@@ -18,6 +18,9 @@ jobs:
           - os: windows-latest
             rid: win-x64
             asset: filecli-win-x64.zip
+          - os: windows-11-arm
+            rid: win-arm64
+            asset: filecli-win-arm64.zip
           - os: ubuntu-latest
             rid: linux-x64
             asset: filecli-linux-x64.tar.gz
@@ -49,15 +52,27 @@ jobs:
         if: runner.os == 'Windows'
         run: |
           Compress-Archive -Path publish/filecli.exe -DestinationPath ${{ matrix.asset }}
+      - name: Generate checksum (unix)
+        if: runner.os != 'Windows'
+        run: sha256sum ${{ matrix.asset }} > ${{ matrix.asset }}.sha256
+      - name: Generate checksum (windows)
+        if: runner.os == 'Windows'
+        shell: pwsh
+        run: |
+          $hash = (Get-FileHash -Algorithm SHA256 "${{ matrix.asset }}").Hash.ToLower()
+          "$hash  ${{ matrix.asset }}" | Out-File -Encoding ascii "${{ matrix.asset }}.sha256"
       - uses: actions/upload-artifact@v4
         with:
           name: ${{ matrix.asset }}
-          path: ${{ matrix.asset }}
+          path: |
+            ${{ matrix.asset }}
+            ${{ matrix.asset }}.sha256
 
   release:
     needs: build
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v4
       - uses: actions/download-artifact@v4
         with:
           merge-multiple: true
@@ -68,5 +83,7 @@ jobs:
         with:
           files: |
             filecli-*.zip
+            filecli-*.zip.sha256
             filecli-*.tar.gz
+            filecli-*.tar.gz.sha256
             nupkg/*.nupkg
